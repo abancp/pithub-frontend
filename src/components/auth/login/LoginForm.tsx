@@ -1,30 +1,34 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import Input from "../../ui/Input/Input"
-import axios from 'axios'
 import { redirect } from 'next/navigation'
-import Button from '../../ui/Button/Button'
+import FormButton from '../../ui/FormButton/FormButton'
 import { toast } from 'sonner'
+import { loginAction } from '@/src/app/actions'
+import { useFormState } from 'react-dom'
+import { ActionResponseState } from '@/src/types/authTypes'
+
 
 const LoginForm = () => {
-    async function handleSubmit(formData: FormData) {
-        'use server'
-        const response = await axios.post('http://localhost:8000/login', { email: formData.get('email'), password: formData.get('password') })
-        if(response.data.success){
-            toast.success("Login Successful")
+    const initialState: ActionResponseState = { success: false, message: "" }
+    const [response, formAction] = useFormState(loginAction, initialState)
+    useEffect(() => {
+        if (response.success) {
+            toast.success(response.message)
             redirect('/')
-        }else{
-            toast.error(response.data.message || "Something Went Wrong! please try again later")
         }
-    }
+    }, [response])
+
     return (
-        <form action={handleSubmit} className='border text-white bg-[#0D1117] w-[20rem] max-h-fit min-h-44 p-3 rounded-md border-[#30363D] flex  justify-center flex-col '>
-            <h1 className='text-center text-white font-medium text-2xl'>Signin to Pithub</h1>
+        <form action={formAction} className='border text-white bg-[#0D1117] w-[20rem] max-h-fit min-h-44 p-3 rounded-md border-[#30363D] flex  justify-center flex-col '>
+            <h1 className='text-center text-white font-medium text-2xl'>Login to Pithub</h1>
             <hr className='mt-4 border-[#30363D] ' />
-            <h4 className='text-left mt-4'>username or email</h4>
+            <span className='text-red-600 text-center text-sm '>{response.success || response.message}</span>
+            <h4 className='text-left mt-4'>email <br /></h4>
             <Input name="email" type='text' />
-            <div className='mt-4 flex justify-between'><h4>password</h4><h4 className='font-thin text-sm hover:underline cursor-pointer transition hover:text-blue-900 '>forget password</h4></div>
+            <div className='mt-4 flex justify-between'><h4>password</h4><h4 className='font-extralight text-sm hover:underline cursor-pointer transition hover:text-blue-900 '>forget password</h4></div>
             <Input name="password" type='text' />
-            <Button/>
+            <FormButton />
         </form>
     )
 }

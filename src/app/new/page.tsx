@@ -1,6 +1,6 @@
 import React from 'react'
 import Input from '../../components/ui/Input/Input'
-import Button from '@/src/components/ui/Button/Button'
+import FormButton from '@/src/components/ui/FormButton/FormButton'
 
  function CreateRepo() {
   async function action(formData:FormData){
@@ -72,7 +72,7 @@ import Button from '@/src/components/ui/Button/Button'
               <h3 className='font-semibold'>Project URI<span className="font-extralight text-sm">(Optional)</span> <p className='text-xs font-extralight'>tasks are planning and building for next stable versions</p></h3>
               <Input border width="full" type='text' name="liveURI" placeholder='eg:https://pithub.vercel.com' />
             </div>
-            <Button/>
+            <FormButton/>
           </div>
         </div>
       </form>
