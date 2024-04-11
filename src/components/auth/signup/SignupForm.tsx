@@ -1,9 +1,10 @@
 'use client'
 
 import React, { FormEvent, useState } from 'react'
-import Input from '../../formItems/Input'
+import Input from '../../ui/Input/Input'
 import axios, { AxiosResponse, AxiosError } from 'axios'
 import { toast, Toaster } from 'sonner';
+import Button from '../../ui/Button/Button';
 
 interface User {
     name: string,
@@ -105,7 +106,7 @@ const SignupForm = () => {
                 <Input onChange={(e: React.ChangeEvent<InputEventTarget>) => { setPassword(e.target.value) }} name="password" type="password" />
                 <h4 className='text-left mt-3'>confirm password <span className='text-red-600 font-light text-sm '>{confirmPasswordErr}</span></h4>
                 <Input onChange={(e: React.ChangeEvent<InputEventTarget>) => { setConfirmPassword(e.target.value) }} name="confirm" type="password" />
-                <button type='submit' className='mt-4 w-100 h-8 rounded-md bg-[#1c5ca6] hover:opacity-80 transition font-medium flex justify-center gap-1 items-center'  >Submit{loading && <div className="spinner"></div>}</button>
+                <Button/>
             </form>
         </div>
     )
