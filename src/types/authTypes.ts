@@ -8,9 +8,22 @@ export interface SignupUser{
     name:FormDataEntryValue | null,
     username:FormDataEntryValue | null,
     password:FormDataEntryValue | null,
+    confirmPassword:FormDataEntryValue | null,
 }
 
 export interface ActionResponseState{
     success:boolean,
     message:string
-}   
+}
+
+export interface SignupActionState{
+    success:boolean,
+    errors:{
+        name?:string,
+        username?:string,
+        email?:string,
+        password?:string,
+        confirmPassword?:string
+    }
+    message?:string | null
+}
