@@ -59,11 +59,16 @@ export async function signupAction(currentState: SignupActionState, formData: Fo
     }
 
     try {
+        if (signupUser.password !== signupUser.confirmPassword) {
+            returnState.errors.confirmPassword = "password not matching"
+            return returnState
+        }
         createUserFormSchema.parse(signupUser)
         returnState.success = true
     } catch (e) {
         if (e instanceof ZodError) {
             for (const error of e.errors) {
+                
                 let element: string = error.path[0] as string
                 switch (element) {
                     case "name": {
@@ -103,13 +108,13 @@ export async function signupAction(currentState: SignupActionState, formData: Fo
         if (axios.isAxiosError(e)) {
             const axiosError: AxiosError = e as AxiosError
             if (axiosError.response) {
-                const responseErrMessage:string = axiosError.response.data as string
-                if(responseErrMessage.startsWith('email')){
-                    return { success: false, message: "", errors: {email:responseErrMessage} }
-                }else if(responseErrMessage.startsWith('username')){
-                    return { success: false, message: "", errors: {username:responseErrMessage} }
-                }else{
-                    return {success:false,message:responseErrMessage,errors:{}}
+                const responseErrMessage: string = axiosError.response.data as string
+                if (responseErrMessage.startsWith('email')) {
+                    return { success: false, message: "", errors: { email: responseErrMessage } }
+                } else if (responseErrMessage.startsWith('username')) {
+                    return { success: false, message: "", errors: { username: responseErrMessage } }
+                } else {
+                    return { success: false, message: responseErrMessage, errors: {} }
                 }
             } else if (axiosError.request) {
                 return { success: false, message: "Network Error! check your network and try again", errors: {} }

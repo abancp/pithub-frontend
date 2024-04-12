@@ -26,6 +26,8 @@ const SignupForm = () => {
         if (response.success) {
             toast.success(response.message)
             redirect('/')
+        }else if(response.message){
+            toast.error(response.message)
         }
     }, [response])
 
@@ -42,7 +44,7 @@ const SignupForm = () => {
                 <Input name="email" type="email" />
                 <h4 className='text-left mt-3'>password <br /> <span className='text-red-600 font-light text-sm '>{response.errors?.password && response.errors.password}</span></h4>
                 <Input name="password" type="password" />
-                <h4 className='text-left mt-3'>confirm password <br /> <span className='text-red-600 font-light text-sm '>{response.errors?.con && response.errors.con}</span></h4>
+                <h4 className='text-left mt-3'>confirm password <br /> <span className='text-red-600 font-light text-sm '>{response.errors?.confirmPassword && response.errors.confirmPassword}</span></h4>
                 <Input name="confirmPassword" type="password" />
                 <FormButton />
             </form>
