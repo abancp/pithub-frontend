@@ -12,10 +12,14 @@ import { ActionResponseState } from '@/src/types/authTypes'
 const LoginForm = () => {
     const initialState: ActionResponseState = { success: false, message: "" }
     const [response, formAction] = useFormState(loginAction, initialState)
+
+
     useEffect(() => {
         if (response.success) {
             toast.success(response.message)
             redirect('/')
+        }else{
+            response.message && toast.error(response.message)
         }
     }, [response])
 
