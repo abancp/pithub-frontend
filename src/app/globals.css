@@ -28,6 +28,18 @@ input:-webkit-autofill {
     }
 }
 
+@keyframes loading-progress {
+    0%{
+        width: 1%;
+    }
+    100%{
+        width: 10%;
+    }
+}
+.loading-progress{
+    animation: loading-progress .2s ease-in-out 1;
+}
+
 .h-h{
     min-height: calc(100vh - 64px);
 }
