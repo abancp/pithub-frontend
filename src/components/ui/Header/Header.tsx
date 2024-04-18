@@ -2,7 +2,7 @@ import React from 'react'
 
 function Header() {
   return (
-    <div className='w-100 h-10 flex justify-between p-8 items-center'>
+    <div className='w-100 h-10 flex justify-between p-8 items-center '>
       <div className="flex w-[50%] justify-start gap-3 text-white">
         <div className='border hover:bg-[rgb(13,17,23)] cursor-pointer border-[#30363D] rounded-md w-7 h-7'>
 
