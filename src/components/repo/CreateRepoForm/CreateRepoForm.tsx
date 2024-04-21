@@ -49,7 +49,7 @@ function CreateRepoForm() {
                 if (axios.isAxiosError(e)) {
                     const axiosError: AxiosError = e as AxiosError
                     if (axiosError.response) {
-                        setNameAvailable(false)
+                        toast.error('Something went wrong!')
                     } else if (axiosError.request) {
                         toast.error('Network Error! check your network and try again')
                     } else {
@@ -64,7 +64,7 @@ function CreateRepoForm() {
     }
 
     return (
-        <form action={action} className="w-5/6 h-fill mb-10 p-3 rounded-md  gap-2 border border-[#30363D] sm:flex text-white ">
+        <form action={action} className="w-5/6 h-fill font-sans  mb-10 p-3 rounded-md  gap-2 border border-[#30363D] sm:flex text-white ">
             <div className="sm:w-[50%] bg-[#010409] flex  flex-col rounded-md border  border-[#30363D]  items-center">
                 <div className="w-full p-3 bg-[#0D1117]  rounded-md border-b border-[#30363D]">
                     <h3 className='text-2xl font-extralight text-center'>Create new Repository</h3>
