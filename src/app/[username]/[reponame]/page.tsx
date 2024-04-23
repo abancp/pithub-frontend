@@ -29,13 +29,13 @@ function page({ params: { reponame, username } }: RepoPageProps) {
               <Progress reponame={reponame} />
             </div>
           </div>
-        <Tasks stage='Active'/> 
-        <Tasks stage='Working'/> 
-        <Tasks stage='Closed'/> 
+        <Tasks stage='Active' initialTasks={["repo page","responsible design"]}/> 
+        <Tasks stage='Working' initialTasks={["home page feed"]}/> 
+        <Tasks stage='Closed' initialTasks={["Progress bar","Dark color theme"]} /> 
         </div>
         <div className="w-[300px]">
           <div className='h-7 mb-4 flex items-center justify-between'>
-            <h3 className='font-bold'>About</h3>
+             <h3 className='font-bold'>About</h3>
             <h3>Settings</h3>
           </div>
           <hr className='border-[#30363D] mb-1' />

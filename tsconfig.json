@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/repo/CreateRepoForm"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/repo/CreateRepoForm", "src/components/Tasks/Tasks/Tasks.tsx"],
   "exclude": ["node_modules"]
 }
