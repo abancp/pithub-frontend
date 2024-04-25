@@ -152,10 +152,8 @@ export async function createRepoAction(initialState: ActionResponseState, formDa
         }
         const response:AxiosResponse = await axios.post('http://localhost:8000/repo/new', {...newRepo,token:cookies().get("token")?.value})
         const tokenString:string = cookies().get("token")?.value as string
-        console.log(tokenString);
         const tokenPayload = JSON.parse(atob(tokenString?.split('.')[1]))
         const username = tokenPayload.username
-        console.log(tokenPayload);
         return {success:true,message:"New Repository Created",username}
     }catch(e){
         if (axios.isAxiosError(e)) {
