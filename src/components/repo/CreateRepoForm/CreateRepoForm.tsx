@@ -10,6 +10,7 @@ import { ActionResponseState } from '@/src/types/authTypes'
 import { useCookies } from 'next-client-cookies';
 import { CreateRepoActionState } from '@/src/types/repoTypes'
 import { redirect } from 'next/navigation'
+import { SERVER_URL } from '@/src/config/collections'
 
 axios.defaults.withCredentials = true;
 
@@ -42,7 +43,7 @@ function CreateRepoForm() {
         setName(e.target.value)
         if (name.length !== 0) {
             try {
-                const response: AxiosResponse = await axios.post('http://localhost:8000/repo/checkname', { name: e.target.value }, { withCredentials: true })
+                const response: AxiosResponse = await axios.post(SERVER_URL+'/repo/checkname', { name: e.target.value }, { withCredentials: true })
                 console.log(response.data);
                 setNameAvailable(response.data.success)
             } catch (e) {

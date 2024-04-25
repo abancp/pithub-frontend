@@ -6,6 +6,7 @@ import { ZodError, string, z } from 'zod'
 import { cookies } from "next/headers";
 import { CreateRepoActionState, NewRepo } from "../types/repoTypes";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
+import { SERVER_URL } from "../config/collections";
 
 axios.defaults.withCredentials = true;
 
@@ -26,7 +27,7 @@ export async function loginAction(currentState: ActionResponseState, formData: F
     }
 
     try {
-        const response: AxiosResponse = await axios.post('http://localhost:8000/login', loginUser, { withCredentials: true })
+        const response: AxiosResponse = await axios.post(SERVER_URL+'/login', loginUser, { withCredentials: true })
         if (response.headers["set-cookie"]) {
             let tokenArgs: Array<string> = response.headers["set-cookie"][0].split(';')
             let name: string = tokenArgs[0].split('=')[0]
@@ -114,7 +115,7 @@ export async function signupAction(currentState: SignupActionState, formData: Fo
     }
 
     try {
-        const response: AxiosResponse = await axios.post("http://localhost:8000/signup", signupUser)
+        const response: AxiosResponse = await axios.post(SERVER_URL+"/signup", signupUser)
         return { success: response.data.success, message: response.data.message, errors: {} }
     } catch (e) {
         if (axios.isAxiosError(e)) {
@@ -150,7 +151,7 @@ export async function createRepoAction(initialState: ActionResponseState, formDa
             languages: languages,
             liveURL: formData.get('liveURL')
         }
-        const response:AxiosResponse = await axios.post('http://localhost:8000/repo/new', {...newRepo,token:cookies().get("token")?.value})
+        const response:AxiosResponse = await axios.post(SERVER_URL+"8000/repo/new", {...newRepo,token:cookies().get("token")?.value})
         const tokenString:string = cookies().get("token")?.value as string
         const tokenPayload = JSON.parse(atob(tokenString?.split('.')[1]))
         const username = tokenPayload.username

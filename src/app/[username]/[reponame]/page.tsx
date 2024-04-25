@@ -5,6 +5,7 @@ import Label from '@/src/components/ui/Label/Label'
 import Tasks from '@/src/components/Tasks/Tasks/Tasks'
 import axios, { AxiosResponse } from 'axios'
 import { cookies } from "next/headers"
+import { SERVER_URL } from '@/src/config/collections'
 
 type RepoPageProps = {
   params: {
@@ -16,7 +17,7 @@ type RepoPageProps = {
 async function page({ params: { reponame, username } }: RepoPageProps) {
   let tokenCookie;
 
-  const { data }: AxiosResponse = await axios.get("http://localhost:8000/repo/" + username + "/" + reponame, {
+  const { data }: AxiosResponse = await axios.get(SERVER_URL+"/repo/" + username + "/" + reponame, {
     withCredentials: true,
     headers: {
       Cookie: `token=${cookies().get("token")?.value}`,
