@@ -52,7 +52,7 @@ function CreateRepoForm() {
                     if (axiosError.response) {
                         toast.error('Something went wrong!')
                     } else if (axiosError.request) {
-                        toast.error('Network Error! check your network and try again')
+                        toast.error('Network Error! check your network and try again'+e)
                     } else {
                         toast.error('Something went wrong!')
                     }
