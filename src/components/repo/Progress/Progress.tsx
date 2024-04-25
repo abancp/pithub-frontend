@@ -4,7 +4,7 @@ import ProgressBar from '../../ui/ProgressBar/ProgressBar'
 function Progress({ reponame,bgAndBorder }: { reponame: string,bgAndBorder?:boolean }) {
   return (
     <div className="font-mono border-[#30363D] rounded-md p-3 min-h-36 w-full border bg-[#0D1117]">
-      <h3 className='text-center  font-sans mb-3 text-lg'>{reponame}'s progress</h3>
+      <h3 className='text-center  font-sans mb-3 text-lg'>{reponame}&apos;s progress</h3>
       <div className='flex items-center justify-between gap-2  w-100'>
         <h3>v0.0.0</h3>
         <ProgressBar progress="40" width='[100%]'/>

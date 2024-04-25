@@ -19,7 +19,7 @@ function Tasks({ stage,initialTasks }: { stage: string,initialTasks:string[] }) 
 
             {showFull &&
                 <div className='p-1 flex gap-1 flex-col'>
-                    {tasks.map((task)=>(<Task name={task}/>))}
+                    {tasks.map((task,i)=>(<Task key={i} name={task}/>))}
                 </div>
             }
 
