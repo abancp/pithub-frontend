@@ -164,7 +164,7 @@ export async function createRepoAction(initialState: ActionResponseState, formDa
                 console.log(responseErrMessage);
                 return {success:false,message:responseErrMessage}
             } else if (axiosError.request) {
-                return { success: false, message: "Network Error! check your network and try again"}
+                return { success: false, message: "Network Error! check your network and try again"+e}
             }
             return { success: false, message: "Something went wrong!"}
         }
