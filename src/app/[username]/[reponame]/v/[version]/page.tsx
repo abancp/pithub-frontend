@@ -10,11 +10,11 @@ function page({ params: { version } }: { params: { version: string } }) {
         <Label text='Upcoming' />
       </div>
       <hr className='border-[#30363D] w-full' />
-      <Tasks stage='MileStones'/>
-      <Tasks stage='Features'/>
-      <Tasks stage='Fixes'/>
-      <Tasks stage='Version Contributers'/>
-      <Tasks stage=''/>
+      <Tasks stage='MileStones' initialTasks={[]}/>
+      <Tasks stage='Features' initialTasks={[]}/>
+      <Tasks stage='Fixes' initialTasks={[]}/>
+      <Tasks stage='Version Contributers' initialTasks={[]}/>
+      <Tasks stage='' initialTasks={[]}/>
     </div>
   )
 }
