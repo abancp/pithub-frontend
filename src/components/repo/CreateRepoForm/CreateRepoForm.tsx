@@ -21,29 +21,32 @@ function CreateRepoForm() {
     const [nameAvailable, setNameAvailable] = useState<boolean>(false)
     const [name, setName] = useState<string>("")
     const initialState: CreateRepoActionState = { success: false, message: "", nameAvailable: true }
-    const [response, action] = useFormState(createRepoAction, initialState)
+    const [createRepoResponse, action] = useFormState(createRepoAction, initialState)
 
 
     useEffect(() => {
-        if (response.success) {
-            toast.success(response.message)
-            redirect('/' + response.username + '/' + name)
+        if (createRepoResponse.success) {
+            toast.success(createRepoResponse.message)
+            redirect('/' + createRepoResponse.username + '/' + name)
         } else {
-            if (response.nameAvailable) {
-                setNameAvailable(response.nameAvailable)
+            if (createRepoResponse.nameAvailable) {
+                setNameAvailable(createRepoResponse.nameAvailable)
             }
-            response.message && toast.error(response.message)
+            createRepoResponse.message && toast.error(createRepoResponse.message)
         }
-    }, [response])
+    }, [createRepoResponse])
 
 
     const handleChange = async (e: React.ChangeEvent<InputEventTarget>) => {
         setName(e.target.value)
+        const token = document.cookie?.split('=')[1]
         if (name.length !== 0) {
             try {
-                console.log(document.cookie);
                 const response: AxiosResponse = await axios.post(SERVER_URL + '/repo/checkname', { name: e.target.value }, {
                     withCredentials: true,
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
                 })
                 console.log(response.data);
                 setNameAvailable(response.data.success)
@@ -113,7 +116,7 @@ function CreateRepoForm() {
                             </div>
                         </label>
                         <div className="w-full">
-                            <h3 className='font-semibold'>Description<span className="font-extralight text-sm">(Optional)</span> </h3>
+                            <h3 className='font-semibold'>Description<span className="font-light text-sm">(Optional)</span> </h3>
                             <Input border width="full" type='text' name="description" placeholder='eg:good cli tool to manage projects' />
                         </div>
                     </div>
@@ -125,16 +128,16 @@ function CreateRepoForm() {
                 </div>
                 <div className='p-4 w-full flex flex-col items-start gap-5'>
                     <div className="w-full">
-                        <h3 className='font-semibold'>Code URI <span className="font-extralight text-sm">(Optional)</span> <p className='text-xs font-extralight'> url of any code hosting platforms to contribute other developers to your Project</p></h3>
+                        <h3 className='font-semibold'>Code URI <span className="font-light text-sm">(Optional)</span> <p className='text-xs font-extralight'> url of any code hosting platforms to contribute other developers to your Project</p></h3>
                         <Input border width="full" type='text' name="codeURL" placeholder='eg:https://github.com/abancp/pit' />
                     </div>
                     <div className="w-full">
-                        <h3 className='font-semibold'>Languages and Technologies<span className="font-extralight text-sm">(Optional)</span> <p className='text-xs font-extralight'>tasks are planning and building for next stable versions</p></h3>
+                        <h3 className='font-semibold'>Languages and Technologies<span className="font-light text-sm">(Optional)</span> <p className='text-xs font-extralight'>tasks are planning and building for next stable versions</p></h3>
                         <Input border width="full" type='text' name="languages" placeholder='Javascript,C++' />
                     </div>
 
                     <div className="w-full">
-                        <h3 className='font-semibold'>Project URI<span className="font-extralight text-sm">(Optional)</span> <p className='text-xs font-extralight'>tasks are planning and building for next stable versions</p></h3>
+                        <h3 className='font-semibold'>Project URI<span className="font-light text-sm">(Optional)</span> <p className='text-xs font-extralight'>tasks are planning and building for next stable versions</p></h3>
                         <Input border width="full" type='text' name="liveURL" placeholder='eg:https://pithub.vercel.com' />
                     </div>
                     <FormButton />
