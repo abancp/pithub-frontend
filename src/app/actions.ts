@@ -151,7 +151,7 @@ export async function createRepoAction(initialState: ActionResponseState, formDa
             languages: languages,
             liveURL: formData.get('liveURL')
         }
-        const response:AxiosResponse = await axios.post(SERVER_URL+"8000/repo/new", {...newRepo,token:cookies().get("token")?.value})
+        const response:AxiosResponse = await axios.post(SERVER_URL+"/repo/new", {...newRepo,token:cookies().get("token")?.value})
         const tokenString:string = cookies().get("token")?.value as string
         const tokenPayload = JSON.parse(atob(tokenString?.split('.')[1]))
         const username = tokenPayload.username
