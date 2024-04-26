@@ -8,7 +8,6 @@ import { useFormState } from 'react-dom'
 import { createRepoAction } from '@/src/app/actions'
 import { CreateRepoActionState } from '@/src/types/repoTypes'
 import { redirect } from 'next/navigation'
-import { cookies } from "next/headers"
 import { SERVER_URL } from '@/src/config/collections'
 
 axios.defaults.withCredentials = true;
@@ -42,11 +41,11 @@ function CreateRepoForm() {
         setName(e.target.value)
         if (name.length !== 0) {
             try {
-                console.log(cookies().get("token"));
+                console.log(document.cookie);
                 const response: AxiosResponse = await axios.post(SERVER_URL + '/repo/checkname', { name: e.target.value }, {
                     withCredentials: true,
                     headers: {
-                        Cookie: `token=${cookies().get("token")?.value}`,
+                        Cookie:document.cookie,
                     }
                 })
                 console.log(response.data);
