@@ -6,6 +6,7 @@ import Tasks from '@/src/components/Tasks/Tasks/Tasks'
 import axios, { AxiosResponse } from 'axios'
 import { cookies } from "next/headers"
 import { SERVER_URL } from '@/src/config/collections'
+import Link from 'next/link'
 
 type RepoPageProps = {
   params: {
@@ -36,7 +37,7 @@ async function page({ params: { reponame, username } }: RepoPageProps) {
               <h2 className='font-mono font-bold text-xl p-0 m-0'> {username}/{reponame}</h2>
               <Label text='Public' />
             </div>
-            <Button text={"Contribute"} />
+            <Link href={"https://"+repo.codeURL} ><Button text={"Contribute"} /></Link>
           </div>
           <div className='flex gap-2'>
             <div className='max-w-[900px] w-full'>
