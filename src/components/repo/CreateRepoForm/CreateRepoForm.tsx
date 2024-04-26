@@ -44,9 +44,6 @@ function CreateRepoForm() {
                 console.log(document.cookie);
                 const response: AxiosResponse = await axios.post(SERVER_URL + '/repo/checkname', { name: e.target.value }, {
                     withCredentials: true,
-                    headers: {
-                        Cookie:document.cookie,
-                    }
                 })
                 console.log(response.data);
                 setNameAvailable(response.data.success)
