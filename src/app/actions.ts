@@ -32,7 +32,7 @@ export async function loginAction(currentState: ActionResponseState, formData: F
             let tokenArgs: Array<string> = response.headers["set-cookie"][0].split(';')
             let name: string = tokenArgs[0].split('=')[0]
             let value: string = tokenArgs[0].split('=')[1]
-            cookies().set(name, value, {sameSite :"lax",  path: "/", expires: new Date(Date.now() + (24 * 60 * 60 * 1000)), priority: "high" })
+            cookies().set(name, value, {  path: "/",name ,secure:true, expires: new Date(Date.now() + (24 * 60 * 60 * 1000))})
         }   
         return response.data
     } catch (e) {
