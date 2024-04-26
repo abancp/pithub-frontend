@@ -47,6 +47,7 @@ function CreateRepoForm() {
                 console.log(response.data);
                 setNameAvailable(response.data.success)
             } catch (e) {
+                console.log(e)
                 if (axios.isAxiosError(e)) {
                     const axiosError: AxiosError = e as AxiosError
                     if (axiosError.response) {
