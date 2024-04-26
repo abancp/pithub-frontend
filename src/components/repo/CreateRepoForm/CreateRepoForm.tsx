@@ -1,15 +1,14 @@
 'use client'
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Input from '../../ui/Input/Input'
 import FormButton from '../../ui/FormButton/FormButton'
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { toast } from 'sonner'
 import { useFormState } from 'react-dom'
 import { createRepoAction } from '@/src/app/actions'
-import { ActionResponseState } from '@/src/types/authTypes'
-import { useCookies } from 'next-client-cookies';
 import { CreateRepoActionState } from '@/src/types/repoTypes'
 import { redirect } from 'next/navigation'
+import { cookies } from "next/headers"
 import { SERVER_URL } from '@/src/config/collections'
 
 axios.defaults.withCredentials = true;
@@ -22,16 +21,16 @@ function CreateRepoForm() {
 
     const [nameAvailable, setNameAvailable] = useState<boolean>(false)
     const [name, setName] = useState<string>("")
-    const initialState:CreateRepoActionState = {success:false,message:"",nameAvailable:true}
-    const [response,action] = useFormState(createRepoAction,initialState)
+    const initialState: CreateRepoActionState = { success: false, message: "", nameAvailable: true }
+    const [response, action] = useFormState(createRepoAction, initialState)
 
-    
+
     useEffect(() => {
         if (response.success) {
             toast.success(response.message)
-            redirect('/'+response.username+'/'+name)
-        }else{
-            if(response.nameAvailable){
+            redirect('/' + response.username + '/' + name)
+        } else {
+            if (response.nameAvailable) {
                 setNameAvailable(response.nameAvailable)
             }
             response.message && toast.error(response.message)
@@ -43,7 +42,12 @@ function CreateRepoForm() {
         setName(e.target.value)
         if (name.length !== 0) {
             try {
-                const response: AxiosResponse = await axios.post(SERVER_URL+'/repo/checkname', { name: e.target.value }, { withCredentials: true })
+                const response: AxiosResponse = await axios.post(SERVER_URL + '/repo/checkname', { name: e.target.value }, {
+                    withCredentials: true,
+                    headers: {
+                        Cookie: `token=${cookies().get("token")?.value}`,
+                    }
+                })
                 console.log(response.data);
                 setNameAvailable(response.data.success)
             } catch (e) {
@@ -53,7 +57,7 @@ function CreateRepoForm() {
                     if (axiosError.response) {
                         toast.error('Something went wrong!')
                     } else if (axiosError.request) {
-                        toast.error('Network Error! check your network and try again'+e)
+                        toast.error('Network Error! check your network and try again' + e)
                     } else {
                         toast.error('Something went wrong!')
                     }
@@ -75,15 +79,15 @@ function CreateRepoForm() {
                     <p className='font-extralight text-center '>You can perfectly manage your projects with Repositories . you can add or manage tasks auto functionings and control versions</p>
                     <div className="flex gap-2 items-center"><p className='mt-1 bg-[#0D1117] px-1 pb-[0.10rem] pt-[0.08rem] rounded-md'>abancp</p>/
                         <Input onChange={handleChange} type='text' name='name' placeholder="name" width="100" border />
-                        {name === "" ? "":nameAvailable ?
+                        {name === "" ? "" : nameAvailable ?
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="text-green-600 bi bi-check-circle-fill" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-                            </svg>  :
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="text-red-600 bi bi-x-circle-fill" viewBox="0 0 16 16">
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
-                                </svg>}
-                       
-                            { name === "" ? "":nameAvailable ?  <p className='text-green-600'>Available name</p>: <p className='text-red-600'>Already exist</p>}
+                            </svg> :
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="text-red-600 bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
+                            </svg>}
+
+                        {name === "" ? "" : nameAvailable ? <p className='text-green-600'>Available name</p> : <p className='text-red-600'>Already exist</p>}
                     </div>
                     <div className="mt-3 w-full gap-3 h-fit justify-center items-center flex flex-col">
                         <label className='cursor-pointer'>

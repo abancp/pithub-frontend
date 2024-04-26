@@ -15,7 +15,6 @@ type RepoPageProps = {
 }
 
 async function page({ params: { reponame, username } }: RepoPageProps) {
-  let tokenCookie;
 
   const { data }: AxiosResponse = await axios.get(SERVER_URL+"/repo/" + username + "/" + reponame, {
     withCredentials: true,
